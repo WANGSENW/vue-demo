@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    APPaaaaaa  aaaaaaaaa
+    APPaaaaaa aaaaaaaaaaa
   </div>
 </template>
-
