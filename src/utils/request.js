@@ -33,9 +33,6 @@ const loading = {
 
 const request = axios.create({
     // /db.json >  通过 axios > /dev-api/db.json >  通过 代理转发（vue.config.js）》 http://localhost:8001/db.json
-    // baseURL: '/dev-api', 
-    // baseURL: process.env.VUE_APP_BASE_API, 
-    // baseURL: '/',
     baseURL:process.env.VUE_APP_BASE_API,
     timeout: 5000 // 请求超时，5000毫秒
 })
@@ -44,7 +41,6 @@ const request = axios.create({
 request.interceptors.request.use(config => {
     // 打开加载窗口
     loading.open()
-
     return config
 }, error => {
     // 关闭加载窗口
@@ -58,7 +54,6 @@ request.interceptors.response.use(response =>{
     // 关闭加载窗口
     loading.close()
     const resp = response.data
-
     // 后台正常响应的状态，如果不是 2000， 说明后台处理有问题
     if(resp.code !== 2000) {
         Message({
@@ -69,7 +64,7 @@ request.interceptors.response.use(response =>{
     }
 
     // return response.data // 可以在这里统一的获取后台响应的数据进行返回，而这里面就没有请求头那些
-    return response
+    return resp
 }, error => {
     // 关闭加载窗口
     loading.close()
@@ -82,9 +77,5 @@ request.interceptors.response.use(response =>{
     return Promise.reject(error);
 })
 
-//  http://localhost:8888/dev-api/db.json 404
-// request.get('/db.json').then(response => {
-//     console.log(response.data)
-// })
 
 export default request // 导出自定义创建 axios 对象
