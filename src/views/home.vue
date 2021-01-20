@@ -5,18 +5,24 @@
 </template>
 
 <script>
-import {request} from '../utils/request'
+import request from '../utils/request'
 import axios from 'axios'
 export default {
   name:'Home',
   created(){
-      request({
-        url:'/api/user/listUser',
+     let response =  request({
+        url:'/user/listUser',
         method:'get',
-        data:'',
+        data:{
+          id:'1',
+          name:'admin'
+        },
          headers: {
           'Content-Type':'application/json'
         }
+      })
+      response.then(res=>{
+        console.log(res)
       })
   },
   methods:{
