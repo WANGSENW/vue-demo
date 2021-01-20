@@ -55,7 +55,7 @@ request.interceptors.response.use(response =>{
     loading.close()
     const resp = response.data
     // 后台正常响应的状态，如果不是 2000， 说明后台处理有问题
-    if(resp.code !== 2000) {
+    if(resp.code !== 200) {
         Message({
             message: resp.message || '系统异常',
             type: 'warning',
