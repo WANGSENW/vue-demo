@@ -13,6 +13,10 @@ export default {
       request({
         url:'/api/user/listUser',
         method:'get',
+        data:'',
+         headers: {
+          'Content-Type':'application/json'
+        }
       })
   },
   methods:{
