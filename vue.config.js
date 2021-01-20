@@ -1,5 +1,22 @@
 module.exports = {
-    publicPath: './',
+   publicPath: process.env.NODE_ENV === 'production'
+       ? './'
+       : '/',
+  assetsDir: 'static',
+  parallel:false,
+  configureWebpack : {
+    performance: {
+        hints:'warning',
+        //入口起点的最大体积 整数类型（以字节为单位）
+        maxEntrypointSize: 50000000,
+        //生成文件的最大体积 整数类型（以字节为单位 300k）
+        maxAssetSize: 30000000,
+        //只给出 js 文件的性能提示
+        assetFilter: function(assetFilename) {
+            return assetFilename.endsWith('.js');
+        }
+    }
+  },
     // // assetsDir: 'static',
     // // parallel: false,
     devServer: {
@@ -9,16 +26,11 @@ module.exports = {
         open: true, //启动服务时自动打开浏览器访问
         proxy: { // 开发环境代理配置
             // '/dev-api': {
-            [process.env.VUE_APP_BASE_API] :{
+            '/api':{
                 // 目标服务器地址，代理访问 http://localhost:8001
-                target: process.env.VUE_APP_SERVICE_URL,
-                changeOrigin: true, // 开启代理服务器，
-                pathRewrite: {
-                    // /dev-api/db.json 最终会发送 http://localhost:8001/db.json
-                    // 将 请求地址前缀 /dev-api 替换为 空的，
-                    // '^/dev-api': '',
-                    [ '^' + process.env.VUE_APP_BASE_API]: ''
-                }
+                target:  "http://81.70.229.157:3000/",
+                ws: true,
+                changeOrigin: true,
             }
         }
     },
